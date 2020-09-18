@@ -1,3 +1,40 @@
 import React from "react";
+import { gql } from "apollo-boost";
+import { useQuery } from "@apollo/react-hooks";
+import styled from "styled-components";
+import Movie from "../Components/Movie";
 
-export default () => <h1>Home</h1>;
+const GET_MOVIES = gql`
+  {
+    movies {
+      id
+      poster
+    }
+  }
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
+
+const Loading = styled.div`
+  font-size: 18px;
+  opacity: 0.5;
+  font-weight: 500;
+  margin-top: 10px;
+`;
+
+export default () => {
+  const { loading, data } = useQuery(GET_MOVIES);
+  return (
+    <Container>
+      {loading && <Loading>Loading...</Loading>}
+      {!loading &&
+        data.movies &&
+        data.movies.map((m) => <Movie key={m.id} id={m.id} />)}
+    </Container>
+  );
+};
