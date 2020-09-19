@@ -27,14 +27,28 @@ const Loading = styled.div`
   margin-top: 10px;
 `;
 
+const Movies = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 25px;
+  width: 100%;
+  object-fit: cover
+  position: relative;
+  top: 40px;
+`;
+
 export default () => {
   const { loading, data } = useQuery(GET_MOVIES);
   return (
     <Container>
       {loading && <Loading>Loading...</Loading>}
-      {!loading &&
-        data.movies &&
-        data.movies.map((m) => <Movie key={m.id} id={m.id} />)}
+      {!loading && data.movies && (
+        <Movies>
+          {data.movies.map((m) => (
+            <Movie key={m.id} id={m.id} bg={m.poster} />
+          ))}
+        </Movies>
+      )}
     </Container>
   );
 };
