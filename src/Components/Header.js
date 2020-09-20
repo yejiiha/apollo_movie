@@ -1,5 +1,7 @@
 import React from "react";
 import "./css/styles.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faSearch } from "@fortawesome/free-solid-svg-icons";
 
 function Header() {
   return (
@@ -7,7 +9,7 @@ function Header() {
       <header>
         <ul className="header__list" id="right">
           <ul className="header__login">
-            <a href="login.html">로그인</a>
+            <a href="Login.js">로그인</a>
           </ul>
           <ul className="header__signin">
             <a href="signin.html">회원가입</a>
@@ -21,10 +23,10 @@ function Header() {
           </ul>
           <ul className="header__theater">극장선택</ul>
           <ul className="header__search">
-            <i className="fas fa-search"></i>
+            <FontAwesomeIcon icon={faSearch} />
           </ul>
           <ul className="header__user">
-            <i className="fas fa-user"></i>
+            <FontAwesomeIcon icon={faUser} />
           </ul>
         </ul>
       </header>
