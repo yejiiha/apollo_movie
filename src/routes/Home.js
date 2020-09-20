@@ -9,6 +9,7 @@ const GET_MOVIES = gql`
     movies {
       id
       poster
+      isLiked @client
     }
   }
 `;
@@ -32,7 +33,6 @@ const Movies = styled.div`
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 25px;
   width: 100%;
-  object-fit: cover
   position: relative;
   top: 40px;
 `;
@@ -45,7 +45,7 @@ export default () => {
       {!loading && data.movies && (
         <Movies>
           {data.movies.map((m) => (
-            <Movie key={m.id} id={m.id} bg={m.poster} />
+            <Movie key={m.id} id={m.id} isLiked={m.isLiked} bg={m.poster} />
           ))}
         </Movies>
       )}

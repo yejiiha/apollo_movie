@@ -7,16 +7,19 @@ import styled from "styled-components";
 const GET_MOVIE = gql`
   query getMovie($id: Int!) {
     movie(id: $id) {
+      id
       title
       runningTime
       rating
       poster
       summary
+      isLiked @client
     }
   }
 `;
 
 const Container = styled.div`
+  padding: 30px;
   height: 100vh;
   background-image: linear-gradient(-45deg, #d754ab, #fd723a);
   width: 100%;
@@ -31,23 +34,27 @@ const Column = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 65px;
+  font-size: 40px;
   margin-bottom: 15px;
 `;
 
 const Subtitle = styled.h4`
-  font-size: 35px;
+  font-size: 30px;
   margin-bottom: 10px;
 `;
 
 const Description = styled.p`
-  font-size: 28px;
+  font-size: 20px;
+  width: 50%;
 `;
 
 const Poster = styled.div`
-  width: 45%;
-  height: 60%;
+  width: 70%;
+  height: 100%;
   background-color: transparent;
+  background-image: url(${(props) => props.bg});
+  background-size: cover;
+  background-position: center center;
 `;
 
 export default () => {
@@ -58,11 +65,21 @@ export default () => {
   return (
     <Container>
       <Column>
-        <Title>Name</Title>
-        <Subtitle>English · 4.5</Subtitle>
-        <Description>lorem ipsum lalalla </Description>
+        <Title>
+          {loading
+            ? "Loading..."
+            : `${data.movie.title} ${data.movie.isLiked ? "💖" : " "}`}
+        </Title>
+        {!loading && data.movie && (
+          <>
+            <Subtitle>
+              {data.movie.runningTime}분 · {data.movie.rating}
+            </Subtitle>
+            <Description>{data.movie.summary} </Description>
+          </>
+        )}
       </Column>
-      <Poster></Poster>
+      <Poster bg={data && data.movie ? data.movie.poster : ""}></Poster>
     </Container>
   );
 };
